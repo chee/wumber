@@ -116,15 +116,15 @@ const functions = [{
 }]
 
 function deconstruct(number) {
-	const numbers = []
-	functions.forEach(({func, base}) => {
+	return functions.reduce((current, {func, base}) => {
+		const numbers = [...current]
 		while (number > base - 1) {
 			const details = func(number)
 			numbers.push(details)
 			number = details.remainder
 		}
-	})
-	return numbers
+		return numbers
+	}, [])
 }
 
 function reducer(previous, {number, word}) {
