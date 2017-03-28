@@ -132,13 +132,13 @@ function reducer(previous, {number, word}) {
 }
 
 module.exports = number => {
-	let minus = false
+	let negative = false
 	if (isNaN(number)) return 'not a number'
 	if (!number) return 'zero'
 	if (number < 0) {
-		minus = true
+		negative = true
 		number = Math.abs(number)
 	}
 	const result = deconstruct(number).reduce(reducer, '').trim()
-	return minus ? `minus ${result}` : result
+	return negative ? `negative ${result}` : result
 }
