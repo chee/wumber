@@ -5,7 +5,6 @@ function deconstructor({words, number, base}) {
 	const round = amount * prefix
 	return {
 		number: prefix,
-		round,
 		remainder: number - round,
 		word: words[which]
 	}
@@ -54,7 +53,6 @@ function teens(number) {
 	const prefix = number - 10
 	return {
 		number: '',
-		round: prefix,
 		remainder: 0,
 		word: words[prefix]
 	}
@@ -78,7 +76,6 @@ function tens(number) {
 	if (prefix == 1) return teens(number)
 	return {
 		number: '',
-		round,
 		remainder: number - round,
 		word: words[prefix]
 	}
@@ -99,7 +96,6 @@ function ones(number) {
 	]
 	return {
 		number: '',
-		round: number,
 		remainder: 0,
 		word: words[number]
 	}
