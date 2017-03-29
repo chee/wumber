@@ -19,6 +19,8 @@ function thousands(number) {
 		'trillion',
 		'quadrillion',
 		'quintillion',
+		'bazillion',
+		'katrillion'
 	]
 	return deconstructor({
 		words,
@@ -127,18 +129,26 @@ function deconstruct(number) {
 	}, [])
 }
 
-function reducer(previous, {number, word}) {
-	return `${previous ? `${previous} ` : ''}${number ? `${deconstruct(number).reduce(reducer, '')} ` : ''}${word}`.trim()
+function reduce(array) {
+	return array.reduce((previous, {number, word}) => {
+		return [
+			previous,
+			number && reduce(deconstruct(number)),
+			word
+		].filter(Boolean).join(' ')
+	 }, '')
 }
 
 module.exports = number => {
-	let negative = false
+	let minus = false
 	if (isNaN(number)) return 'not a number'
 	if (!number) return 'zero'
+	number = Number(number)
 	if (number < 0) {
-		negative = true
+		minus = true
 		number = Math.abs(number)
 	}
-	const result = deconstruct(number).reduce(reducer, '').trim()
-	return negative ? `negative ${result}` : result
+	if (!Number.isFinite(number)) return minus ? 'minus infinity' : 'infinity'
+	const result = reduce(deconstruct(number)).trim()
+	return minus ? `minus ${result}` : result
 }
